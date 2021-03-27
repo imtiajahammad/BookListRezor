@@ -21,5 +21,21 @@ namespace BookListRezor.Pages.BookLIst
         {
             Book = await _applicationDbContext.Book.FindAsync(id);
         }
+
+
+        public async Task<IActionResult> OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                var BookFromDb = await _applicationDbContext.Book.FindAsync(Book.Id);
+                BookFromDb.Name = Book.Name;
+                BookFromDb.Author = Book.Author;
+                BookFromDb.ISBN = Book.ISBN;
+                await _applicationDbContext.SaveChangesAsync();
+                return RedirectToPage("Index");
+            }
+            return RedirectToPage();
+
+        }
     }
 }
