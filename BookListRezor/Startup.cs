@@ -26,6 +26,7 @@ namespace BookListRezor
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddControllersWithViews();// it helps to support api calls
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
@@ -52,6 +53,7 @@ namespace BookListRezor
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();//helps to map api calls
                 endpoints.MapRazorPages();
             });
         }
