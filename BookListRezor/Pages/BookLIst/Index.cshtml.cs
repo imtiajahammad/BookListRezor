@@ -23,5 +23,16 @@ namespace BookListRezor.Pages.BookLIst
         {
             Books = await _applicationDbContext.Book.ToListAsync();
         }
+        public async Task<IActionResult> OnPostDelete(int id)
+        {
+            var book = await _applicationDbContext.Book.FindAsync(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            _applicationDbContext.Book.Remove(book);
+            await _applicationDbContext.SaveChangesAsync();
+            return RedirectToPage("Index");
+        }
     }
 }
